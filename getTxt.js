@@ -63,7 +63,7 @@ function buttonOnOff(val)
 }
 
 // 아웃풋 텍스트에 추가한 텍스트들에 태그 추가
-function changed_Wrd(size, weight, script)
+function changed_Wrd(size, weight)
 {
   outputTxt.style.fontSize = size;
   outputTxt.style.font = weight;
@@ -79,6 +79,7 @@ function addTag()
     node.appendChild(txtNode);
     diablo = diablo + node;
   }
+  debugger;
   document.getElementById('outputText').appendChild(diablo);
 }
 
@@ -104,7 +105,7 @@ function startTyping()
   else
   {
     tpField.focus();
-    changed_Wrd('30px', 'normal', getString[content_Cnt]);
+    changed_Wrd('30px', 'normal');
     outputTxt.style.color = 'gray';
     addTag();
   }
