@@ -1,0 +1,109 @@
+body
+{
+  margin: 0;
+  padding: 0;
+}
+
+#box
+{
+  text-align: center;
+}
+
+#content-text
+{
+  font-size: 15px;
+  padding: 15px;
+}
+
+#getText
+{
+  text-align: center;
+  margin: 10px;
+  padding: 20px;
+  background-color: #1abc9c;
+  color: white;
+  border-style: none;
+  font-size: 17px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+p
+{
+  margin: 0;
+}
+
+#btnClear
+{
+  border-style: none;
+  padding: 10px 15px 10px 15px;
+  text-align: center;
+  font-size: 17px;
+  border-radius: 8px;
+  background-color: #4834d4;
+  cursor: pointer;
+  color: white;
+  display: inline-block;
+  margin: 10px 5px;
+}
+
+#btnNext
+{
+  border-style: none;
+  padding: 10px 15px 10px 15px;
+  text-align: center;
+  font-size: 17px;
+  border-radius: 8px;
+  background-color: #4834d4;
+  cursor: pointer;
+  color: white;
+  display: inline-block;
+  margin: 10px 5px;
+}
+
+#reset
+{
+  border-style: none;
+  padding: 10px 15px 10px 15px;
+  text-align: center;
+  font-size: 17px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background-color: gold;
+  color: black;
+}
+
+#outputText
+{
+  width: auto;
+  text-align: center;
+}
+
+#tpField
+{
+  display: block;
+  margin: auto;
+  border: none;
+  border-bottom: 2px solid #4834d4;
+  width: 500px;
+  height: 20px;
+  padding: 10px;
+  font-size: 15px;
+}
+
+input:focus
+{
+  outline: none;
+}
+
+button:focus
+{
+  outline: none;
+}
+
+.bottom
+{
+  margin-top: 100px;
+}
