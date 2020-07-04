@@ -12,13 +12,6 @@
 var getContent = document.querySelectorAll('#content-text p'); //btnStart를 누르는 순간 바로 글자 가져오고
 var contentLen = getContent.length;
 var getString = []; // 페이지의 글자를 가져와 배열로 저장함
-
-// 배열로 저장함
-for (var i = 0; i < contentLen; i++)
-{
-  getString[i] = getContent[i].innerText;
-}
-
 var btnStart = document.getElementById('getText');
 var outputTxt = document.getElementById('outputText');
 var tpField = document.getElementById('tpField');
@@ -27,6 +20,12 @@ var btnNext = document.getElementById('btnNext');
 var typingArea = document.getElementById('typingArea');
 var resetButton;
 var content_Cnt = 0;
+
+// 배열로 저장함
+for (var i = 0; i < contentLen; i++)
+{
+  getString[i] = getContent[i].innerText;
+}
 
 function createReset()
 {
@@ -79,7 +78,7 @@ function addTag()
     node.id = i;
     var txtNode = document.createTextNode(getString[content_Cnt][i]);
     node.appendChild(txtNode);
-    document.getElementById('outputText').appendChild(node);
+    outputTxt.appendChild(node);
   }
 }
 
