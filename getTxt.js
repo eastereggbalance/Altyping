@@ -80,6 +80,7 @@ function addTag()
 function changed_Color(color, num)
 {
   var temp = document.getElementById(num);
+  console.log(num);
   temp.style.color = color;
 }
 
@@ -120,15 +121,15 @@ tpField.addEventListener('keyup', enterKey);
 
 function check_Wrd()
 {
-  var count = tpField.value.length; //변수 설정 안하고 해봐야 할듯 
-
-  //반복문으로 가능?
+  var count = tpField.value.length - 1;
+  //처음 시작하는 글자만 어떻게 해보면
   debugger;
+  console.log(tpField.value);
   if(tpField.value[count] == outputTxt.textContent[count])
   {
     changed_Color('blue', count);
   }
-  else if(event.keyCode == 8)
+  else if(event.keyCode === 8)
   {
     changed_Color('gray', count);
   }
@@ -143,16 +144,16 @@ tpField.addEventListener('keypress', check_Wrd); // keyup으로 할 시 타이�
 
 /*
 ///////////큰 퀘스트///////////
-** outputText가 화면에 나오면 그 길이에 맞추어 input width 변경
-** 글을 가져와 글자 하나 하나에 전부 span tag 추가
+ ** outputText가 화면에 나오면 그 길이에 맞추어 input width 변경
 //////////디테일 퀘스트 //////////
-** clear 버튼과 input 합치기
-** Get description 버튼 누르면 #typingArea 활성화
-** 특수문자 제거
+ ** clear 버튼과 input 합치기
+ ** Get description 버튼 누르면 #typingArea 활성화
+ ** 특수문자 제거
 ////////// 버  그  //////////
-**한글 타이핑시 시간 안감
- -----------------------------------------------------
- /////////// 해결한거 ///////////
+ **한글 타이핑시 시간 안감
+-----------------------------------------------------
+/////////// 해결한거 ///////////
+ ** 글을 가져와 글자 하나 하나에 전부 span tag 추가
  ** 타이핑을 시작하면 시간 측정 시작
  ** resettyping 누르면 css 원래대로 돌리기 => 중복 제거
  ** Start new typing 버튼 계속나오는 버그 =>
