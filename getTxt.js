@@ -24,7 +24,7 @@ var content_Cnt = 0;
 // 배열로 저장함
 for (var i = 0; i < contentLen; i++)
 {
-  getString[i] = getContent[i].innerText;
+  getString[i] = getContent[i].textContent;
 }
 
 function createReset()
@@ -41,6 +41,8 @@ function nextContent()
   tpField.value = '';
   startTyping();
 }
+btnClear.addEventListener('click', nextContent);
+btnNext.addEventListener('click', nextContent);
 
 function resetTyping()
 {
@@ -56,13 +58,6 @@ function buttonOnOff(val)
   btnClear.disabled = val;
   btnNext.disabled = val;
   btnStart.disabled = val;
-}
-
-// 아웃풋 텍스트에 추가한 텍스트들에 태그 추가
-function changed_Wrd(size, weight)
-{
-  outputTxt.style.fontSize = size;
-  outputTxt.style.font = weight;
 }
 
 function addTag()
@@ -85,7 +80,6 @@ function addTag()
 function changed_Color(color, num)
 {
   var temp = document.getElementById(num);
-  console.log(num);
   temp.style.color = color;
 }
 
@@ -93,8 +87,9 @@ function startTyping()
 {
   if(content_Cnt >= contentLen)
   {
-    buttonOnOff(true); // 더 이상 내용이 없다면 모든 버튼 비활성화
-    changed_Wrd('25px', 'bold');
+    buttonOnOff(true);
+    outputTxt.style.font = 'bold';
+    outputTxt.style.fontSize = '25px';
     outputTxt.style.color = 'red';
     outputTxt.textContent = "No more contents";
     createReset();
@@ -103,11 +98,13 @@ function startTyping()
   else
   {
     tpField.focus();
-    changed_Wrd('30px', 'normal');
-    outputTxt.style.color = 'gray';
     addTag();
+    outputTxt.style.font = 'normal';
+    outputTxt.style.color = 'gray';
+    outputTxt.style.fontSize = '30px';
   }
 }
+btnStart.addEventListener('click', startTyping);
 
 // input에 입력을 하다 enter를 누를시 발생
 function enterKey()
@@ -119,30 +116,28 @@ function enterKey()
     nextContent();
   }
 }
+tpField.addEventListener('keyup', enterKey);
 
 function check_Wrd()
 {
-  var count = tpField.value.length;
+  var count = tpField.value.length; //변수 설정 안하고 해봐야 할듯 
 
+  //반복문으로 가능?
+  debugger;
   if(tpField.value[count] == outputTxt.textContent[count])
   {
     changed_Color('blue', count);
   }
-  /*else if(count == 0)
+  else if(event.keyCode == 8)
   {
-    outputTxt.style.color = 'gray';
-  }*/
+    changed_Color('gray', count);
+  }
   else
   {
     changed_Color('red', count);
   }
 }
-
-btnStart.addEventListener('click', startTyping);
-tpField.addEventListener('keyup', enterKey);
-tpField.addEventListener('keyup', check_Wrd);
-btnClear.addEventListener('click', nextContent);
-btnNext.addEventListener('click', nextContent);
+tpField.addEventListener('keypress', check_Wrd); // keyup으로 할 시 타이핑 속도를 못 따라감
 
 ////////////////////////////////////////////////////////////////////
 
@@ -154,8 +149,8 @@ btnNext.addEventListener('click', nextContent);
 ** clear 버튼과 input 합치기
 ** Get description 버튼 누르면 #typingArea 활성화
 ** 특수문자 제거
- ////////// 버  그  //////////
- **한글 타이핑시 시간 안감
+////////// 버  그  //////////
+**한글 타이핑시 시간 안감
  -----------------------------------------------------
  /////////// 해결한거 ///////////
  ** 타이핑을 시작하면 시간 측정 시작
