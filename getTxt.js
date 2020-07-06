@@ -121,7 +121,7 @@ tpField.addEventListener('keyup', enterKey);
 
 function check_Wrd()
 {
-  var count = tpField.value.length - 1;
+  var count = tpField.value.length;
   //처음 시작하는 글자만 어떻게 해보면
   debugger;
   console.log(tpField.value);
