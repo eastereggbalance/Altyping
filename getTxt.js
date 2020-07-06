@@ -117,28 +117,32 @@ function enterKey()
     nextContent();
   }
 }
-tpField.addEventListener('keyup', enterKey);
+tpField.addEventListener('keypress', enterKey);
 
 function check_Wrd()
 {
   var count = tpField.value.length;
-  //처음 시작하는 글자만 어떻게 해보면
-  debugger;
-  console.log(tpField.value);
-  if(tpField.value[count] == outputTxt.textContent[count])
+
+  if(tpField.value[count - 1] == outputTxt.textContent[count - 1])
   {
-    changed_Color('blue', count);
+    changed_Color('blue', count - 1);
   }
   else if(event.keyCode === 8)
   {
-    changed_Color('gray', count);
+    changed_Color('gray', count - 1);
   }
   else
   {
-    changed_Color('red', count);
+    changed_Color('red', count - 1);
   }
 }
-tpField.addEventListener('keypress', check_Wrd); // keyup으로 할 시 타이핑 속도를 못 따라감
+tpField.addEventListener('keyup', check_Wrd); // keyup으로 할 시 타이핑 속도를 못 따라감
+
+/*
+ * tpField keyboard event를 keyup으로 하고 무조건 첫 글자 부터 시작하니까
+ * i값을 만들고 한글자 입력되면 i++ 하면서 비교
+*/
+
 
 ////////////////////////////////////////////////////////////////////
 
