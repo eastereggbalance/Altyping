@@ -20,6 +20,7 @@ var btnNext = document.getElementById('btnNext');
 var typingArea = document.getElementById('typingArea');
 var resetButton;
 var content_Cnt = 0;
+var nowWrd = 0;
 
 // 배열로 저장함
 for (var i = 0; i < contentLen; i++)
@@ -39,6 +40,7 @@ function nextContent()
 {
   content_Cnt++;
   tpField.value = '';
+  nowWrd = 0;
   startTyping();
 }
 btnClear.addEventListener('click', nextContent);
@@ -117,9 +119,9 @@ function enterKey()
     nextContent();
   }
 }
-tpField.addEventListener('keypress', enterKey);
+tpField.addEventListener('keyup', enterKey);
 
-function check_Wrd()
+/*function check_Wrd()
 {
   var count = tpField.value.length;
 
@@ -134,6 +136,25 @@ function check_Wrd()
   else
   {
     changed_Color('red', count - 1);
+  }
+}*/
+
+function check_Wrd()
+{
+  if(tpField.value[nowWrd] == outputTxt.textContent[nowWrd])
+  {
+    changed_Color('blue', nowWrd);
+    nowWrd++;
+  }
+  else if(event.keyCode === 8)
+  {
+    changed_Color('gray', nowWrd - 1);
+    nowWrd--;
+  }
+  else
+  {
+    changed_Color('red', nowWrd);
+    nowWrd++;
   }
 }
 tpField.addEventListener('keyup', check_Wrd); // keyup으로 할 시 타이핑 속도를 못 따라감
