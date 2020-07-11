@@ -11,7 +11,7 @@ body
 
 #content-text
 {
-  font-size: 15px;
+  font-size: 20px;
   padding: 15px;
 }
 
@@ -33,6 +33,18 @@ p
   margin: 0;
 }
 
+#tpField
+{
+  display: inline-block;
+  margin: auto;
+  border: none;
+  border-bottom: 2px solid #4834d4;
+  width: 900px;
+  height: 20px;
+  padding: 10px;
+  font-size: 20px;
+}
+
 #btnClear
 {
   border-style: none;
@@ -43,8 +55,9 @@ p
   background-color: #4834d4;
   cursor: pointer;
   color: white;
-  display: inline-block;
+  display: inline;
   margin: 10px 5px;
+  visibility: hidden;
 }
 
 #btnNext
@@ -57,8 +70,9 @@ p
   background-color: #4834d4;
   cursor: pointer;
   color: white;
-  display: inline-block;
-  margin: 10px 5px;
+  display: block;
+  margin: 0px auto;
+  width: 100px;
 }
 
 #reset
@@ -79,18 +93,6 @@ p
 {
   width: auto;
   text-align: center;
-}
-
-#tpField
-{
-  display: block;
-  margin: auto;
-  border: none;
-  border-bottom: 2px solid #4834d4;
-  width: 500px;
-  height: 20px;
-  padding: 10px;
-  font-size: 15px;
 }
 
 input:focus

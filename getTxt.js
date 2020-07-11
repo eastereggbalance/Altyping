@@ -9,38 +9,36 @@
 여기까지 하면 출시 가능.
 */
 
-var getContent = document.querySelectorAll('#content-text p'); //btnStart를 누르는 순간 바로 글자 가져오고
-var contentLen = getContent.length;
-var getString = []; // 페이지의 글자를 가져와 배열로 저장함
+var getContents = document.querySelectorAll('#content-text p'); //btnStart를 누르는 순간 바로 글자 가져오고
+var contents_Cnt = getContents.length;
+var sentences = [];
 var btnStart = document.getElementById('getText');
-var outputTxt = document.getElementById('outputText');
-var tpField = document.getElementById('tpField');
 var btnClear = document.getElementById('btnClear');
 var btnNext = document.getElementById('btnNext');
-var typingArea = document.getElementById('typingArea');
-var resetButton;
-var content_Cnt = 0;
-var nowWrd = 0;
+var outputTxt = document.getElementById('outputText');
+var tpField = document.getElementById('tpField');
+var btnReset;
+var nowString = 0;
+var nowWord = 0;
 
-// 배열로 저장함
-for (var i = 0; i < contentLen; i++)
+for (var i = 0; i < contents_Cnt; i++)
 {
-  getString[i] = getContent[i].textContent;
+  sentences[i] = getContents[i].textContent;
 }
 
 function createReset()
 {
-  resetButton = document.createElement('button');
-  resetButton.id = "reset";
-  resetButton.textContent = 'Start new typing';
-  typingArea.appendChild(resetButton);
+  btnReset = document.createElement('button');
+  btnReset.id = "reset";
+  btnReset.textContent = 'Start new typing';
+  document.getElementById('typingArea').appendChild(btnReset);
 }
 
 function nextContent()
 {
-  content_Cnt++;
+  nowString++;
   tpField.value = '';
-  nowWrd = 0;
+  nowWord = 0;
   startTyping();
 }
 btnClear.addEventListener('click', nextContent);
@@ -48,9 +46,9 @@ btnNext.addEventListener('click', nextContent);
 
 function resetTyping()
 {
-  content_Cnt = 0;
+  nowString = 0;
   buttonOnOff(false);
-  resetButton.parentNode.removeChild(resetButton);
+  btnReset.parentNode.removeChild(btnReset);
   startTyping();
 }
 
@@ -69,11 +67,11 @@ function addTag()
     outputTxt.textContent = null;
   }
 
-  for(var i = 0; i < getString[content_Cnt].length; i++)
+  for(var i = 0; i < sentences[nowString].length; i++)
   {
     var node = document.createElement('span');
     node.id = i;
-    var txtNode = document.createTextNode(getString[content_Cnt][i]);
+    var txtNode = document.createTextNode(sentences[nowString][i]);
     node.appendChild(txtNode);
     outputTxt.appendChild(node);
   }
@@ -88,7 +86,7 @@ function changed_Color(color, num)
 
 function startTyping()
 {
-  if(content_Cnt >= contentLen)
+  if(nowString >= contents_Cnt)
   {
     buttonOnOff(true);
     outputTxt.style.font = 'bold';
@@ -96,7 +94,7 @@ function startTyping()
     outputTxt.style.color = 'red';
     outputTxt.textContent = "No more contents";
     createReset();
-    resetButton.addEventListener('click', resetTyping);
+    btnReset.addEventListener('click', resetTyping);
   }
   else
   {
@@ -118,44 +116,26 @@ function enterKey()
     nextContent();
   }
 }
-tpField.addEventListener('keyup', enterKey);
-
-/*function check_Wrd()
-{
-  var count = tpField.value.length;
-
-  if(tpField.value[count - 1] == outputTxt.textContent[count - 1])
-  {
-    changed_Color('blue', count - 1);
-  }
-  else if(event.keyCode === 8)
-  {
-    changed_Color('gray', count - 1);
-  }
-  else
-  {
-    changed_Color('red', count - 1);
-  }
-}*/
+tpField.addEventListener('keypress', enterKey);
 
 function check_Wrd()
 {
   if(event.keyCode != 16)
   {
-    if(tpField.value[nowWrd] == outputTxt.textContent[nowWrd])
+    if(tpField.value[nowWord] == outputTxt.textContent[nowWord])
     {
-      changed_Color('blue', nowWrd);
-      nowWrd++;
+      changed_Color('blue', nowWord);
+      nowWord++;
     }
     else if(event.keyCode === 8)
     {
-      changed_Color('gray', nowWrd - 1);
-      nowWrd--;
+      changed_Color('gray', nowWord - 1);
+      nowWord--;
     }
     else
     {
-      changed_Color('red', nowWrd);
-      nowWrd++;
+      changed_Color('red', nowWord);
+      nowWord++;
     }
   }
   else
@@ -175,7 +155,7 @@ tpField.addEventListener('keyup', check_Wrd); // keyup으로 할 시 타이핑 �
 
 /*
 ///////////큰 퀘스트///////////
- ** outputText가 화면에 나오면 그 길이에 맞추어 input width 변경
+ ** outputText가 화면에 나오면 그 길이에 맞추어 input width 변경 => tpField 크기를 그냥 늘림
 //////////디테일 퀘스트 //////////
  ** clear 버튼과 input 합치기
  ** Get description 버튼 누르면 #typingArea 활성화
