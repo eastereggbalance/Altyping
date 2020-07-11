@@ -109,7 +109,6 @@ function startTyping()
 }
 btnStart.addEventListener('click', startTyping);
 
-// input에 입력을 하다 enter를 누를시 발생
 function enterKey()
 {
   if(event.keyCode == 13)
@@ -141,20 +140,27 @@ tpField.addEventListener('keyup', enterKey);
 
 function check_Wrd()
 {
-  if(tpField.value[nowWrd] == outputTxt.textContent[nowWrd])
+  if(event.keyCode != 16)
   {
-    changed_Color('blue', nowWrd);
-    nowWrd++;
-  }
-  else if(event.keyCode === 8)
-  {
-    changed_Color('gray', nowWrd - 1);
-    nowWrd--;
+    if(tpField.value[nowWrd] == outputTxt.textContent[nowWrd])
+    {
+      changed_Color('blue', nowWrd);
+      nowWrd++;
+    }
+    else if(event.keyCode === 8)
+    {
+      changed_Color('gray', nowWrd - 1);
+      nowWrd--;
+    }
+    else
+    {
+      changed_Color('red', nowWrd);
+      nowWrd++;
+    }
   }
   else
   {
-    changed_Color('red', nowWrd);
-    nowWrd++;
+    return
   }
 }
 tpField.addEventListener('keyup', check_Wrd); // keyup으로 할 시 타이핑 속도를 못 따라감
