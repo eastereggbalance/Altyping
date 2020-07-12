@@ -26,6 +26,13 @@ for (var i = 0; i < contents_Cnt; i++)
   sentences[i] = getContents[i].textContent;
 }
 
+if(outputTxt.textContent === "")
+{
+  tpField.disabled = true;
+  btnClear.disabled = true;
+  btnNext.disabled = true;
+}
+
 function createReset()
 {
   btnReset = document.createElement('button');
@@ -39,6 +46,7 @@ function nextContent()
   nowString++;
   tpField.value = '';
   nowWord = 0;
+  stop();
   startTyping();
 }
 btnClear.addEventListener('click', nextContent);
@@ -77,11 +85,19 @@ function addTag()
   }
 }
 
-function changed_Color(color, num)
+function changed_Color(color, backColor, num)
 {
   var temp = document.getElementById(num);
-  console.log(num);
-  temp.style.color = color;
+
+  if(temp.textContent === " ")
+  {
+    temp.style.backgroundColor = backColor;
+  }
+  else
+  {
+    temp.style.backgroundColor = backColor;
+    temp.style.color = color;
+  }
 }
 
 function startTyping()
@@ -98,8 +114,9 @@ function startTyping()
   }
   else
   {
-    tpField.focus();
     addTag();
+    buttonOnOff(false);
+    tpField.focus();
     outputTxt.style.font = 'normal';
     outputTxt.style.color = 'gray';
     outputTxt.style.fontSize = '30px';
@@ -124,27 +141,39 @@ function check_Wrd()
   {
     if(tpField.value[nowWord] == outputTxt.textContent[nowWord])
     {
-      changed_Color('blue', nowWord);
+      changed_Color('#0e630e', "#e7fbd3", nowWord);
       nowWord++;
     }
     else if(event.keyCode === 8)
     {
-      changed_Color('gray', nowWord - 1);
-      nowWord--;
+      if(nowWord === 0)
+      {
+        nowWord = 0;
+        alert("Nothing");
+      }
+      else
+      {
+        changed_Color('gray', "white", nowWord - 1);
+        nowWord--;
+      }
     }
     else
     {
-      changed_Color('red', nowWord);
+      changed_Color('darkred', 'pink', nowWord);
       nowWord++;
     }
   }
   else
   {
-    return
+    return;
+  }
+
+  if(nowWord === sentences[nowString].length)
+  {
+    nextContent();
   }
 }
-tpField.addEventListener('keyup', check_Wrd); // keyup으로 할 시 타이핑 속도를 못 따라감
-
+tpField.addEventListener('keyup', check_Wrd);
 /*
  * tpField keyboard event를 keyup으로 하고 무조건 첫 글자 부터 시작하니까
  * i값을 만들고 한글자 입력되면 i++ 하면서 비교

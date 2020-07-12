@@ -57,5 +57,3 @@ function getTime()
 }
 
 tpField.addEventListener('keypress', startTimer);
-btnClear.addEventListener('click', stop);
-btnNext.addEventListener('click', stop);
