@@ -20,6 +20,7 @@ var tpField = document.getElementById('tpField');
 var btnReset;
 var nowString = 0;
 var nowWord = 0;
+var wordCnt = 1;
 
 for (var i = 0; i < contents_Cnt; i++)
 {
@@ -82,6 +83,11 @@ function addTag()
     var txtNode = document.createTextNode(sentences[nowString][i]);
     node.appendChild(txtNode);
     outputTxt.appendChild(node);
+
+    if(txtNode.textContent === " ") // how many words in this sentence?
+    {
+      wordCnt++;
+    }
   }
 }
 
@@ -174,6 +180,20 @@ function check_Wrd()
   }
 }
 tpField.addEventListener('keyup', check_Wrd);
+
+/*else if(event.keyCode === 8)
+    {
+      if(nowWord === 0)
+      {
+        nowWord = 0;
+        alert("Nothing");
+      }
+      else
+      {
+        changed_Color('gray', "white", nowWord - 1);
+        nowWord--;
+      }
+    }*/
 /*
  * tpField keyboard event를 keyup으로 하고 무조건 첫 글자 부터 시작하니까
  * i값을 만들고 한글자 입력되면 i++ 하면서 비교
