@@ -18,9 +18,10 @@ var btnNext = document.getElementById('btnNext');
 var outputTxt = document.getElementById('outputText');
 var tpField = document.getElementById('tpField');
 var btnReset;
-var nowString = 0;
-var nowWord = 0;
-var wordCnt = 1;
+var nowString = 0, nowWord = 0, wordCnt = 1, typingCnt = 0;
+var wordPerMinute = 0;
+
+// 현재 1초 동안 몇번 눌렸는지 받아서 * 12
 
 for (var i = 0; i < contents_Cnt; i++)
 {
@@ -47,6 +48,8 @@ function nextContent()
   nowString++;
   tpField.value = '';
   nowWord = 0;
+  wordCnt = 1;
+  typingCnt = 0;
   stop();
   startTyping();
 }
@@ -145,12 +148,13 @@ function check_Wrd()
 {
   if(event.keyCode != 16)
   {
-    if(tpField.value[nowWord] == outputTxt.textContent[nowWord])
+    if(tpField.value[nowWord] == outputTxt.textContent[nowWord]) // 맞았을 때
     {
       changed_Color('#0e630e', "#e7fbd3", nowWord);
       nowWord++;
+      typingCnt++;
     }
-    else if(event.keyCode === 8)
+    else if(event.keyCode === 8) // backspace 
     {
       if(nowWord === 0)
       {
@@ -163,18 +167,19 @@ function check_Wrd()
         nowWord--;
       }
     }
-    else
+    else // 틀렸을 때
     {
       changed_Color('darkred', 'pink', nowWord);
       nowWord++;
+      typingCnt++;
     }
   }
-  else
+  else // shift 키 무시
   {
     return;
   }
 
-  if(nowWord === sentences[nowString].length)
+  if(nowWord === sentences[nowString].length) // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
   {
     nextContent();
   }
@@ -198,7 +203,6 @@ tpField.addEventListener('keyup', check_Wrd);
  * tpField keyboard event를 keyup으로 하고 무조건 첫 글자 부터 시작하니까
  * i값을 만들고 한글자 입력되면 i++ 하면서 비교
 */
-
 
 ////////////////////////////////////////////////////////////////////
 

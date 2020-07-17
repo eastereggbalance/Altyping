@@ -23,6 +23,8 @@ function run()
     {
         ms = 0;
         seconds++;
+        wordPerMinute = typingCnt * 5;
+        console.log(wordPerMinute);
     }
     if(seconds == 60)
     {
