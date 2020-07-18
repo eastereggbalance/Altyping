@@ -18,7 +18,7 @@ var btnNext = document.getElementById('btnNext');
 var outputTxt = document.getElementById('outputText');
 var tpField = document.getElementById('tpField');
 var btnReset;
-var nowString = 0, nowWord = 0, totalWords = 1, typingCnt = 0, wordsCnt = 1;
+var nowString = 0, nowWord = 0, wordsTotal = 1, typingCnt = 0, wordsCnt = 1;
 
 for (var i = 0; i < contents_Cnt; i++)
 {
@@ -46,7 +46,7 @@ function nextContent()
   tpField.value = '';
   nowWord = 0;
   typingCnt = 0;
-  totalWords = 1;
+  wordsTotal = 1;
   wordsCnt = 1;
   stop();
   startTyping();
@@ -87,7 +87,7 @@ function addTag()
 
     if(txtNode.textContent === " ") // how many words in this sentence?
     {
-      totalWords++;
+      wordsTotal++;
     }
   }
 }
