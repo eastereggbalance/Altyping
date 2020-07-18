@@ -94,15 +94,12 @@ function addTag()
 
 function changed_Color(color, backColor, num)
 {
-  var temp = document.getElementById(num);
+  var temp = document.getElementById(num); // id 값 확인 해서 한번 지나간 아이디면 no count wordsCnt
 
   if(temp.textContent === " ")
   {
     temp.style.backgroundColor = backColor;
-    if(backColor === "#e7fbd3")
-    {
-      wordsCnt++;
-    }
+    wordsCnt++;
   }
   else
   {
@@ -187,7 +184,6 @@ function check_Wrd()
   {
     nextContent();
   }
-  console.log(wordsCnt, typingCnt);
 }
 tpField.addEventListener('keyup', check_Wrd);
 
