@@ -18,10 +18,7 @@ var btnNext = document.getElementById('btnNext');
 var outputTxt = document.getElementById('outputText');
 var tpField = document.getElementById('tpField');
 var btnReset;
-var nowString = 0, nowWord = 0, wordCnt = 1, typingCnt = 0;
-var wordPerMinute = 0;
-
-// 현재 1초 동안 몇번 눌렸는지 받아서 * 12
+var nowString = 0, nowWord = 0, totalWords = 1, typingCnt = 0, wordsCnt = 1;
 
 for (var i = 0; i < contents_Cnt; i++)
 {
@@ -48,8 +45,9 @@ function nextContent()
   nowString++;
   tpField.value = '';
   nowWord = 0;
-  wordCnt = 1;
   typingCnt = 0;
+  totalWords = 1;
+  wordsCnt = 1;
   stop();
   startTyping();
 }
@@ -89,7 +87,7 @@ function addTag()
 
     if(txtNode.textContent === " ") // how many words in this sentence?
     {
-      wordCnt++;
+      totalWords++;
     }
   }
 }
@@ -101,6 +99,10 @@ function changed_Color(color, backColor, num)
   if(temp.textContent === " ")
   {
     temp.style.backgroundColor = backColor;
+    if(backColor === "#e7fbd3")
+    {
+      wordsCnt++;
+    }
   }
   else
   {
@@ -154,7 +156,7 @@ function check_Wrd()
       nowWord++;
       typingCnt++;
     }
-    else if(event.keyCode === 8) // backspace 
+    else if(event.keyCode === 8) // Backspace 
     {
       if(nowWord === 0)
       {
@@ -165,6 +167,8 @@ function check_Wrd()
       {
         changed_Color('gray', "white", nowWord - 1);
         nowWord--;
+        typingCnt++;
+        //Backspace 
       }
     }
     else // 틀렸을 때
@@ -178,27 +182,15 @@ function check_Wrd()
   {
     return;
   }
-
+  
   if(nowWord === sentences[nowString].length) // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
   {
     nextContent();
   }
+  console.log(wordsCnt, typingCnt);
 }
 tpField.addEventListener('keyup', check_Wrd);
 
-/*else if(event.keyCode === 8)
-    {
-      if(nowWord === 0)
-      {
-        nowWord = 0;
-        alert("Nothing");
-      }
-      else
-      {
-        changed_Color('gray', "white", nowWord - 1);
-        nowWord--;
-      }
-    }*/
 /*
  * tpField keyboard event를 keyup으로 하고 무조건 첫 글자 부터 시작하니까
  * i값을 만들고 한글자 입력되면 i++ 하면서 비교

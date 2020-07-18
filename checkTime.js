@@ -1,10 +1,12 @@
 /*
 ////////////////////////////아이디어//////////////////////////
-** 다음 버튼 말고도 검색한 내용의 역사 개요 등 큰 카테고리를 url로 생성해서 누르면 해당 내용 가져오기.  
+** 다음 버튼 말고도 검색한 내용의 역사 개요 등 큰 카테고리를 url로 생성해서 누르면 해당 내용 가져오기.
 */
 var minutes = 0, seconds = 0, ms = 0;
 var running;
+var charactersPM, wordsPM, fallingRateSlow; // PM => per minute
 var timer = document.getElementById('stopwatch');
+var wpm = document.getElementById('wpm');
 
 function startTimer()
 {
@@ -23,8 +25,19 @@ function run()
     {
         ms = 0;
         seconds++;
-        wordPerMinute = typingCnt * 5;
-        console.log(wordPerMinute);
+
+        // if(typingCnt === 0)
+        // {
+        //     wordsPM = fallingRateSlow;
+        // }
+        // else
+        // {
+        //     charactersPM = typingCnt * 60;
+        //     wordsPM = charactersPM / 5;
+        // }
+
+        // fallingRateSlow = wordsPM;
+        // typingCnt = 0;
     }
     if(seconds == 60)
     {
