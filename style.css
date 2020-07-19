@@ -109,3 +109,9 @@ button:focus
 {
   margin-top: 100px;
 }
+
+#wpm
+{
+  margin: 20px 10px;
+  font-size: 30px;
+}

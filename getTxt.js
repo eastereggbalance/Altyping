@@ -11,14 +11,14 @@
 
 var getContents = document.querySelectorAll('#content-text p'); //btnStart를 누르는 순간 바로 글자 가져오고
 var contents_Cnt = getContents.length;
-var sentences = [];
 var btnStart = document.getElementById('getText');
 var btnClear = document.getElementById('btnClear');
 var btnNext = document.getElementById('btnNext');
 var outputTxt = document.getElementById('outputText');
 var tpField = document.getElementById('tpField');
-var btnReset;
+var sentences = [], btnReset;
 var nowString = 0, nowWord = 0, wordsTotal = 1, typingCnt = 0, wordsCnt = 1;
+var check_Id = 0; // 공백을 한번 지나간 아이디는 Count 하지 않음
 
 for (var i = 0; i < contents_Cnt; i++)
 {
@@ -164,7 +164,6 @@ function check_Wrd()
       {
         changed_Color('gray', "white", nowWord - 1);
         nowWord--;
-        typingCnt++;
         //Backspace 
       }
     }
