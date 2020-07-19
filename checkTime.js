@@ -4,7 +4,7 @@
 */
 var minutes = 0, seconds = 0, ms = 0;
 var running;
-var charactersPM, wordsPM, seconds_Minutes; // PM => per minute
+var charactersPM, wordsPM, fallingRateSlow, seconds_Minutes; // PM => per minute
 var timer = document.getElementById('stopwatch');
 var wpm = document.getElementById('wpm');
 
@@ -25,7 +25,6 @@ function run()
     {
         ms = 0;
         seconds++;
-
         seconds_Minutes = seconds / 60;
         seconds_Minutes = seconds_Minutes.toFixed(4);
         seconds_Minutes *= 1;
@@ -39,6 +38,19 @@ function run()
         wordsPM *= 1;
 
         wpm.textContent = wordsPM;
+        //console.log(wordsPM);
+
+        // if(typingCnt === 0)
+        // {
+        //     wordsPM = fallingRateSlow;
+        // }
+        // else
+        // {
+        //     charactersPM = typingCnt * 60;
+        //     wordsPM = charactersPM / 5;
+        // }
+        // fallingRateSlow = wordsPM;
+        // typingCnt = 0;
     }
     if(seconds == 60)
     {
