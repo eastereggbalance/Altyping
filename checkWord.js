@@ -2,6 +2,14 @@ function empty()
 {
     if(tpField.value === "")
     {
-        alert("really? you done?"); // confirm 으로 수정
+        var noInput = confirm("really? you done?");
+        if(noInput)
+        {
+            nextContent();
+        }
+        else
+        {
+            return;
+        }
     }
 }

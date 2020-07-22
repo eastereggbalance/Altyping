@@ -45,21 +45,6 @@ p
   font-size: 20px;
 }
 
-#btnClear
-{
-  border-style: none;
-  padding: 10px 15px 10px 15px;
-  text-align: center;
-  font-size: 17px;
-  border-radius: 8px;
-  background-color: #4834d4;
-  cursor: pointer;
-  color: white;
-  display: inline;
-  margin: 10px 5px;
-  visibility: hidden;
-}
-
 #btnNext
 {
   border-style: none;
@@ -71,8 +56,8 @@ p
   cursor: pointer;
   color: white;
   display: block;
-  margin: 0px auto;
-  width: 100px;
+  margin: 20px auto;
+  width: 125px;
 }
 
 #reset

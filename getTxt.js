@@ -12,7 +12,6 @@
 var getContents = document.querySelectorAll('#content-text p'); //btnStart를 누르는 순간 바로 글자 가져오고
 var contents_Cnt = getContents.length;
 var btnStart = document.getElementById('getText');
-var btnClear = document.getElementById('btnClear');
 var btnNext = document.getElementById('btnNext');
 var outputTxt = document.getElementById('outputText');
 var tpField = document.getElementById('tpField');
@@ -28,7 +27,6 @@ for (var i = 0; i < contents_Cnt; i++)
 if(outputTxt.textContent === "")
 {
   tpField.disabled = true;
-  btnClear.disabled = true;
   btnNext.disabled = true;
 }
 
@@ -51,7 +49,6 @@ function nextContent()
   stop();
   startTyping();
 }
-btnClear.addEventListener('click', nextContent);
 btnNext.addEventListener('click', nextContent);
 
 function resetTyping()
@@ -65,7 +62,6 @@ function resetTyping()
 function buttonOnOff(val)
 {
   tpField.disabled = val;
-  btnClear.disabled = val;
   btnNext.disabled = val;
   btnStart.disabled = val;
 }
@@ -134,11 +130,9 @@ btnStart.addEventListener('click', startTyping);
 
 function enterKey()
 {
-  if(event.keyCode == 13)
+  if(event.keyCode === 13)
   {
     empty(); // checkWord.js
-    stop(); // checkTime.js 39
-    nextContent();
   }
 }
 tpField.addEventListener('keypress', enterKey);
