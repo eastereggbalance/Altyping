@@ -7,6 +7,7 @@ var running;
 var charactersPM, wordsPM, seconds_Minutes; // PM => per minute
 var timer = document.getElementById('stopwatch');
 var wpm = document.getElementById('wpm');
+var accuracy = document.getElementById('Accuracy');
 
 function startTimer()
 {
@@ -26,6 +27,7 @@ function run()
         ms = 0;
         seconds++;
 
+        // WPM
         seconds_Minutes = seconds / 60;
         seconds_Minutes = seconds_Minutes.toFixed(4);
         seconds_Minutes *= 1;
@@ -37,8 +39,14 @@ function run()
         wordsPM = charactersPM / 5;
         wordsPM = wordsPM.toFixed(0);
         wordsPM *= 1;
-
+        
         wpm.textContent = wordsPM;
+        
+        // Accuracy
+        accuracyRate = (nowCharacter - typingErrorCnt) / nowCharacter * 100;
+        accuracyRate = accuracyRate.toFixed(0);
+        accuracyRate *= 1;
+        accuracy.textContent = accuracyRate + "%";
     }
     if(seconds == 60)
     {

@@ -9,6 +9,8 @@
 여기까지 하면 출시 가능.
 */
 
+// typingCharacterCnt typingWordsCnt 변수 이름 추천
+
 var getContents = document.querySelectorAll('#content-text p'); //btnStart를 누르는 순간 바로 글자 가져오고
 var contents_Cnt = getContents.length;
 var btnStart = document.getElementById('getText');
@@ -16,8 +18,9 @@ var btnNext = document.getElementById('btnNext');
 var outputTxt = document.getElementById('outputText');
 var tpField = document.getElementById('tpField');
 var sentences = [], btnReset;
-var nowString = 0, nowWord = 0, wordsTotal = 1, typingCnt = 0, wordsCnt = 1;
-var check_Id = 0; // 공백을 한번 지나간 아이디는 Count 하지 않음
+var nowString = 0, nowCharacter = 0;
+var wordsTotal = 1, typingCnt = 0, wordsCnt = 1, typingErrorCnt = 0, accuracyRate;
+var check_Id = 0; // 한번 지나간 아이디는 Count 하지 않음
 
 for (var i = 0; i < contents_Cnt; i++)
 {
@@ -42,7 +45,7 @@ function nextContent()
 {
   nowString++;
   tpField.value = '';
-  nowWord = 0;
+  nowCharacter = 0;
   typingCnt = 0;
   wordsTotal = 1;
   wordsCnt = 1;
@@ -139,33 +142,33 @@ tpField.addEventListener('keypress', enterKey);
 
 function check_Wrd()
 {
-  if(event.keyCode != 16)
+  if(event.keyCode != 16) // shift 키 무시
   {
-    if(tpField.value[nowWord] == outputTxt.textContent[nowWord]) // 맞았을 때
+    if(tpField.value[nowCharacter] == outputTxt.textContent[nowCharacter]) // 맞았을 때
     {
-      changed_Color('#0e630e', "#e7fbd3", nowWord);
-      nowWord++;
+      changed_Color('#0e630e', "#e7fbd3", nowCharacter);
+      nowCharacter++;
       typingCnt++;
     }
-    else if(event.keyCode === 8) // Backspace 
+    else if(event.keyCode === 8) // Backspace
     {
-      if(nowWord === 0)
+      if(nowCharacter === 0)
       {
-        nowWord = 0;
+        nowCharacter = 0;
         alert("Nothing");
       }
       else
       {
-        changed_Color('gray', "white", nowWord - 1);
-        nowWord--;
-        //Backspace 
+        changed_Color('gray', "white", nowCharacter - 1);
+        nowCharacter--;
       }
     }
     else // 틀렸을 때
     {
-      changed_Color('darkred', 'pink', nowWord);
-      nowWord++;
+      changed_Color('darkred', 'pink', nowCharacter);
+      nowCharacter++;
       typingCnt++;
+      typingErrorCnt++;
     }
   }
   else // shift 키 무시
@@ -173,7 +176,7 @@ function check_Wrd()
     return;
   }
   
-  if(nowWord === sentences[nowString].length) // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
+  if(nowCharacter === sentences[nowString].length) // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
   {
     nextContent();
   }
