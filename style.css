@@ -98,5 +98,26 @@ button:focus
 #wpm
 {
   margin: 20px 10px;
-  font-size: 30px;
+  font-size: 20px;
+  animation: fadeIn 4s;
+}
+
+#Accuracy
+{
+  margin: 20px 10px;
+  font-size: 20px;
+  animation: fadeIn 4s;
+}
+
+@-webkit-keyframes fadeIn
+{
+  from
+  {
+    opacity: 0;
+  }
+
+  to
+  {
+    opacity: 1;
+  }
 }

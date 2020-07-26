@@ -40,13 +40,13 @@ function run()
         wordsPM = wordsPM.toFixed(0);
         wordsPM *= 1;
         
-        wpm.textContent = wordsPM;
+        wpm.textContent = `Speed : ${wordsPM}`;
         
         // Accuracy
         accuracyRate = (nowCharacter - typingErrorCnt) / nowCharacter * 100;
         accuracyRate = accuracyRate.toFixed(0);
         accuracyRate *= 1;
-        accuracy.textContent = accuracyRate + "%";
+        accuracy.textContent = `Accuracy : ${accuracyRate} %`;
     }
     if(seconds == 60)
     {
