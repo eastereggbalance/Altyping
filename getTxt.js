@@ -20,29 +20,25 @@ var tpField = document.getElementById('tpField');
 var sentences = [], btnReset;
 var nowString = 0, nowCharacter = 0;
 var wordsTotal = 1, typingCnt = 0, wordsCnt = 1, typingErrorCnt = 0, accuracyRate;
-var check_Id = 0; // 한번 지나간 아이디는 Count 하지 않음
+var checkTypingError = []; // 한번 지나간 아이디는 Count 하지 않음
 
-for (var i = 0; i < contents_Cnt; i++)
-{
+for (var i = 0; i < contents_Cnt; i++) {
   sentences[i] = getContents[i].textContent;
 }
 
-if(outputTxt.textContent === "")
-{
+if(outputTxt.textContent === "") {
   tpField.disabled = true;
   btnNext.disabled = true;
 }
 
-function createReset()
-{
+function createReset() {
   btnReset = document.createElement('button');
   btnReset.id = "reset";
   btnReset.textContent = 'Start new typing';
   document.getElementById('typingArea').appendChild(btnReset);
 }
 
-function nextContent()
-{
+function nextContent() {
   nowString++;
   tpField.value = '';
   nowCharacter = 0;
@@ -54,65 +50,54 @@ function nextContent()
 }
 btnNext.addEventListener('click', nextContent);
 
-function resetTyping()
-{
+function resetTyping() {
   nowString = 0;
   buttonOnOff(false);
   btnReset.parentNode.removeChild(btnReset);
   startTyping();
 }
 
-function buttonOnOff(val)
-{
+function buttonOnOff(val) {
   tpField.disabled = val;
   btnNext.disabled = val;
   btnStart.disabled = val;
 }
 
-function addTag()
-{
-  if(outputTxt.textContent != null)
-  {
+function addTag() {
+  if(outputTxt.textContent != null) {
     outputTxt.textContent = null;
   }
 
-  for(var i = 0; i < sentences[nowString].length; i++)
-  {
+  for(var i = 0; i < sentences[nowString].length; i++) {
     var node = document.createElement('span');
     node.id = i;
     var txtNode = document.createTextNode(sentences[nowString][i]);
     node.appendChild(txtNode);
     outputTxt.appendChild(node);
 
-    if(txtNode.textContent === " ") // how many words in this sentence?
-    {
+    if(txtNode.textContent === " ") { // how many words in this sentence?
       wordsTotal++;
     }
   }
 }
 
-function changed_Color(color, backColor, num)
-{
+function changed_Color(color, backColor, num) {
   var temp = document.getElementById(num); // id 값 확인 해서 한번 지나간 아이디면 no count wordsCnt
 
   //만약 color가 darkred면 typingErrorCnt++
 
-  if(temp.textContent === " ")
-  {
+  if(temp.textContent === " ") {
     temp.style.backgroundColor = backColor;
     wordsCnt++;
   }
-  else
-  {
+  else {
     temp.style.backgroundColor = backColor;
     temp.style.color = color;
   }
 }
 
-function startTyping()
-{
-  if(nowString >= contents_Cnt)
-  {
+function startTyping() {
+  if(nowString >= contents_Cnt) {
     buttonOnOff(true);
     outputTxt.style.font = 'bold';
     outputTxt.style.fontSize = '25px';
@@ -121,8 +106,7 @@ function startTyping()
     createReset();
     btnReset.addEventListener('click', resetTyping);
   }
-  else
-  {
+  else {
     addTag();
     buttonOnOff(false);
     tpField.focus();
@@ -133,57 +117,59 @@ function startTyping()
 }
 btnStart.addEventListener('click', startTyping);
 
-function enterKey()
-{
-  if(event.keyCode === 13)
-  {
+function enterKey() {
+  if(event.keyCode === 13) {
     empty(); // checkWord.js
   }
 }
 tpField.addEventListener('keypress', enterKey);
 
-function check_Wrd()
-{
-  if(event.keyCode != 16) // shift 키 무시
-  {
-    if(tpField.value[nowCharacter] == outputTxt.textContent[nowCharacter]) // 맞았을 때
-    {
+function check_Word() {
+  if(event.keyCode != 16) { // shift 키 무시
+    if(tpField.value[nowCharacter] == outputTxt.textContent[nowCharacter]) { // 맞았을 때
       changed_Color('#0e630e', "#e7fbd3", nowCharacter);
+      checkTypingError[nowCharacter] = true;
       nowCharacter++;
       typingCnt++;
     }
-    else if(event.keyCode === 8) // Backspace
-    {
-      if(nowCharacter === 0)
-      {
+    else if(event.keyCode === 8) { // Backspace
+      if(nowCharacter === 0) { // 아무것도 입력하지 않은 상태에서 Backspace를 눌렀을때
         nowCharacter = 0;
         alert("Nothing");
       }
-      else
-      {
+      else {
         changed_Color('gray', "white", nowCharacter - 1);
+        checkTypingError[nowCharacter] = null;
         nowCharacter--;
       }
     }
-    else // 틀렸을 때
-    {
+    else { // 틀렸을 때
       changed_Color('darkred', 'pink', nowCharacter);
+      checkTypingError[nowCharacter] = false;
       nowCharacter++;
       typingCnt++;
       typingErrorCnt++;
     }
   }
-  else // shift 키 무시
-  {
+  else { // shift 키 무시
     return;
   }
   
-  if(nowCharacter === sentences[nowString].length) // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
-  {
+  if(nowCharacter === sentences[nowString].length) { // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
     nextContent();
   }
 }
-tpField.addEventListener('keyup', check_Wrd);
+tpField.addEventListener('keyup', check_Word);
+
+// for(var i = 0; i <= nowCharacter; i++) {
+//   if(checkTypingError[i] || checkTypingError[i] == null) {
+//     return;
+//   }
+//   else {
+//     typingErrorCnt++;
+//     console.log(typingErrorCnt);
+//   }
+// }
 
 /*
  * tpField keyboard event를 keyup으로 하고 무조건 첫 글자 부터 시작하니까
