@@ -95,6 +95,8 @@ function changed_Color(color, backColor, num)
 {
   var temp = document.getElementById(num); // id 값 확인 해서 한번 지나간 아이디면 no count wordsCnt
 
+  //만약 color가 darkred면 typingErrorCnt++
+
   if(temp.textContent === " ")
   {
     temp.style.backgroundColor = backColor;

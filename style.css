@@ -109,7 +109,7 @@ button:focus
   animation: fadeIn 4s;
 }
 
-@-webkit-keyframes fadeIn
+@keyframes fadeIn
 {
   from
   {
