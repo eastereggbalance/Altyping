@@ -124,26 +124,42 @@ function enterKey() {
 }
 tpField.addEventListener('keypress', enterKey);
 
+function check_Id(num) { 
+  if(checkTypingError[num] === true) {
+    return;
+  }
+  else {
+    typingErrorCnt--;
+  }
+}
+
+// 아이디 체크
+// if(passedId > nowCharacter)
+// {
+//   typingCnt--;
+// }
+
 function check_Word() {
-  if(event.keyCode != 16) { // shift 키 무시
-    if(tpField.value[nowCharacter] == outputTxt.textContent[nowCharacter]) { // 맞았을 때
+  if(event.keyCode != 16) { // Ignore Shift
+    if(tpField.value[nowCharacter] == outputTxt.textContent[nowCharacter]) { // Correct
       changed_Color('#0e630e', "#e7fbd3", nowCharacter);
       checkTypingError[nowCharacter] = true;
       nowCharacter++;
       typingCnt++;
     }
-    else if(event.keyCode === 8) { // Backspace
+    else if(event.keyCode === 8) { // Pressed Backspace
       if(nowCharacter === 0) { // 아무것도 입력하지 않은 상태에서 Backspace를 눌렀을때
         nowCharacter = 0;
         alert("Nothing");
       }
-      else {
+      else { // Just Backspace
         changed_Color('gray', "white", nowCharacter - 1);
-        checkTypingError[nowCharacter] = null;
+        check_Id(nowCharacter - 1);
+        checkTypingError[nowCharacter - 1] = null;
         nowCharacter--;
       }
     }
-    else { // 틀렸을 때
+    else { // Wrong
       changed_Color('darkred', 'pink', nowCharacter);
       checkTypingError[nowCharacter] = false;
       nowCharacter++;
@@ -151,10 +167,11 @@ function check_Word() {
       typingErrorCnt++;
     }
   }
-  else { // shift 키 무시
+  else { // Ignore Shift
     return;
   }
-  
+  console.log(typingErrorCnt);
+
   if(nowCharacter === sentences[nowString].length) { // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
     nextContent();
   }
