@@ -87,14 +87,13 @@ function changed_Color(color, backColor, num) {
   var temp = document.getElementById(num); // id 값 확인 해서 한번 지나간 아이디면 no count wordsCnt
   //만약 color가 darkred면 typingErrorCnt++
 
-  switch(temp.textContent) {
-    case " " :
-      temp.style.backgroundColor = backColor;
-      wordsCnt++;
-      break;
-    default :
-      temp.style.backgroundColor = backColor;
-      temp.style.color = color;
+  if(temp.textContent === " ") {
+    temp.style.backgroundColor = backColor;
+    wordsCnt++;
+  }
+  else {
+    temp.style.backgroundColor = backColor;
+    temp.style.color = color;
   }
 
   switch(color) {
@@ -104,7 +103,6 @@ function changed_Color(color, backColor, num) {
       typingCnt++;
       break;
     case 'gray' : // Backspace
-      nowCharacter--;
       break;
     default : // Wrong
       checkTypingError[nowCharacter] = false;
@@ -150,18 +148,11 @@ function enterKey() {
 tpField.addEventListener('keypress', enterKey);
 
 function backSpaceCorrection(num) {
-  // if(checkTypingError[num] === true) {
-  //   return;
-  // }
-  // else {
-  //   typingErrorCnt--;
-  // }
-
-  switch(checkTypingError[num]) {
-    case true :
-      break;
-    default :
-      typingErrorCnt--;
+  if(checkTypingError[num] === true) {
+    return;
+  }
+  else {
+    typingErrorCnt--;
   }
 }
 
@@ -172,26 +163,33 @@ function backSpaceCorrection(num) {
 // }
 
 function check_Word() {
-  if(event.keyCode != 16) { // Ignore Shift
-    if(tpField.value[nowCharacter] === outputTxt.textContent[nowCharacter]) { // Correct
-      changed_Color('#0e630e', "#e7fbd3", nowCharacter);
-    }
-    else if(event.keyCode === 8) { // Pressed Backspace
-      if(nowCharacter === 0) { // 아무것도 입력하지 않은 상태에서 Backspace를 눌렀을때
-        nowCharacter = 0;
-        alert("Nothing");
-      }
-      else { // Just Backspace
-        changed_Color('gray', "white", nowCharacter - 1);
-        backSpaceCorrection(nowCharacter - 1);
-      }
-    }
-    else { // Wrong
-      changed_Color('darkred', 'pink', nowCharacter);
-    }
+  var checkKey = 1;
+  if(event.keyCode === 16)
+  {
+    checkKey = 16;
   }
-  else { // Ignore Shift
-    return;
+
+  switch(checkKey) {
+    case 16 : // Ignore Shift
+      break;
+    default :
+      if(tpField.value[nowCharacter] === outputTxt.textContent[nowCharacter]) { // Correct
+        changed_Color('#0e630e', "#e7fbd3", nowCharacter);
+      }
+      else if(event.keyCode === 8) { // Pressed Backspace
+        if(nowCharacter === 0) { // 아무것도 입력하지 않은 상태에서 Backspace를 눌렀을때
+          nowCharacter = 0;
+          alert("Nothing");
+        }
+        else { // Just Backspace
+          changed_Color('gray', "white", nowCharacter - 1);
+          backSpaceCorrection(nowCharacter - 1);
+          nowCharacter--;
+        }
+      }
+      else { // Wrong
+        changed_Color('darkred', 'pink', nowCharacter);
+      }
   }
   console.log(typingErrorCnt);
 
@@ -201,14 +199,15 @@ function check_Word() {
 }
 tpField.addEventListener('keyup', check_Word);
 
-// for(var i = 0; i <= nowCharacter; i++) {
-//   if(checkTypingError[i] || checkTypingError[i] == null) {
-//     return;
-//   }
-//   else {
-//     typingErrorCnt++;
-//     console.log(typingErrorCnt);
-//   }
+// switch(nowCharacter) {
+//   case 0 : // 아무것도 입력하지 않은 상태에서 Backspace를 눌렀을때
+//     nowCharacter = 0; // 이거 꼭 있어야 하나?
+//     alert("Nothing");
+//     break;
+//   default : // Just Backspace
+//     changed_Color('gray', "white", nowCharacter - 1);
+//     backSpaceCorrection(nowCharacter - 1);
+//     nowCharacter--;
 // }
 
 /*
