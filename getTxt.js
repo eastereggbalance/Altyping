@@ -41,6 +41,8 @@ function createReset() {
 function nextContent() {
   nowCharacter = 0;
   typingCnt = 0;
+  typingErrorCnt = 0
+  checkId = 0
   wordsTotal = 1;
   wordsCnt = 1;
   nowString++;
@@ -83,16 +85,32 @@ function addTag() {
 
 function changed_Color(color, backColor, num) {
   var temp = document.getElementById(num); // id 값 확인 해서 한번 지나간 아이디면 no count wordsCnt
-
   //만약 color가 darkred면 typingErrorCnt++
 
-  if(temp.textContent === " ") { // 공백 일 경우 색 변경
-    temp.style.backgroundColor = backColor;
-    wordsCnt++;
+  switch(temp.textContent) {
+    case " " :
+      temp.style.backgroundColor = backColor;
+      wordsCnt++;
+      break;
+    default :
+      temp.style.backgroundColor = backColor;
+      temp.style.color = color;
   }
-  else { // 글자 일 경우 색 변경
-    temp.style.backgroundColor = backColor;
-    temp.style.color = color;
+
+  switch(color) {
+    case '#0e630e' : // correct
+      checkTypingError[nowCharacter] = true;
+      nowCharacter++;
+      typingCnt++;
+      break;
+    case 'gray' : // Backspace
+      nowCharacter--;
+      break;
+    default : // Wrong
+      checkTypingError[nowCharacter] = false;
+      nowCharacter++;
+      typingCnt++;
+      typingErrorCnt++;
   }
 
   if(checkId > num) {
@@ -132,11 +150,18 @@ function enterKey() {
 tpField.addEventListener('keypress', enterKey);
 
 function backSpaceCorrection(num) {
-  if(checkTypingError[num] === true) {
-    return;
-  }
-  else {
-    typingErrorCnt--;
+  // if(checkTypingError[num] === true) {
+  //   return;
+  // }
+  // else {
+  //   typingErrorCnt--;
+  // }
+
+  switch(checkTypingError[num]) {
+    case true :
+      break;
+    default :
+      typingErrorCnt--;
   }
 }
 
@@ -150,9 +175,6 @@ function check_Word() {
   if(event.keyCode != 16) { // Ignore Shift
     if(tpField.value[nowCharacter] === outputTxt.textContent[nowCharacter]) { // Correct
       changed_Color('#0e630e', "#e7fbd3", nowCharacter);
-      checkTypingError[nowCharacter] = true;
-      nowCharacter++;
-      typingCnt++;
     }
     else if(event.keyCode === 8) { // Pressed Backspace
       if(nowCharacter === 0) { // 아무것도 입력하지 않은 상태에서 Backspace를 눌렀을때
@@ -162,21 +184,16 @@ function check_Word() {
       else { // Just Backspace
         changed_Color('gray', "white", nowCharacter - 1);
         backSpaceCorrection(nowCharacter - 1);
-        nowCharacter--;
       }
     }
     else { // Wrong
       changed_Color('darkred', 'pink', nowCharacter);
-      checkTypingError[nowCharacter] = false;
-      nowCharacter++;
-      typingCnt++;
-      typingErrorCnt++;
     }
   }
   else { // Ignore Shift
     return;
   }
-  console.log(checkId);
+  console.log(typingErrorCnt);
 
   if(nowCharacter === sentences[nowString].length) { // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
     nextContent();
