@@ -4,10 +4,11 @@
 */
 var minutes = 0, seconds = 0, ms = 0;
 var running;
-var charactersPM, wordsPM, seconds_Minutes; // PM => per minute
 var timer = document.getElementById('stopwatch');
 var wpm = document.getElementById('wpm');
 var accuracy = document.getElementById('Accuracy');
+var charactersPM, wordsPM; // PM => per minute
+var accuracyRate, seconds_Minutes;
 
 function startTimer()
 {

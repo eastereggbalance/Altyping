@@ -19,7 +19,7 @@ var outputTxt = document.getElementById('outputText');
 var tpField = document.getElementById('tpField');
 var sentences = [], btnReset;
 var nowString = 0, nowCharacter = 0;
-var wordsTotal = 1, typingCnt = 0, wordsCnt = 1, typingErrorCnt = 0, accuracyRate;
+var wordsTotal = 1, typingCnt = 0, wordsCnt = 1, typingErrorCnt = 0, checkId = 0;
 var checkTypingError = []; // 한번 지나간 아이디는 Count 하지 않음
 
 for (var i = 0; i < contents_Cnt; i++) {
@@ -39,12 +39,12 @@ function createReset() {
 }
 
 function nextContent() {
-  nowString++;
-  tpField.value = '';
   nowCharacter = 0;
   typingCnt = 0;
   wordsTotal = 1;
   wordsCnt = 1;
+  nowString++;
+  tpField.value = '';
   stop();
   startTyping();
 }
@@ -86,13 +86,20 @@ function changed_Color(color, backColor, num) {
 
   //만약 color가 darkred면 typingErrorCnt++
 
-  if(temp.textContent === " ") {
+  if(temp.textContent === " ") { // 공백 일 경우 색 변경
     temp.style.backgroundColor = backColor;
     wordsCnt++;
   }
-  else {
+  else { // 글자 일 경우 색 변경
     temp.style.backgroundColor = backColor;
     temp.style.color = color;
+  }
+
+  if(checkId > num) {
+    return;
+  }
+  else {
+    checkId = num;
   }
 }
 
@@ -124,7 +131,7 @@ function enterKey() {
 }
 tpField.addEventListener('keypress', enterKey);
 
-function check_Id(num) { 
+function backSpaceCorrection(num) {
   if(checkTypingError[num] === true) {
     return;
   }
@@ -141,7 +148,7 @@ function check_Id(num) {
 
 function check_Word() {
   if(event.keyCode != 16) { // Ignore Shift
-    if(tpField.value[nowCharacter] == outputTxt.textContent[nowCharacter]) { // Correct
+    if(tpField.value[nowCharacter] === outputTxt.textContent[nowCharacter]) { // Correct
       changed_Color('#0e630e', "#e7fbd3", nowCharacter);
       checkTypingError[nowCharacter] = true;
       nowCharacter++;
@@ -154,8 +161,7 @@ function check_Word() {
       }
       else { // Just Backspace
         changed_Color('gray', "white", nowCharacter - 1);
-        check_Id(nowCharacter - 1);
-        checkTypingError[nowCharacter - 1] = null;
+        backSpaceCorrection(nowCharacter - 1);
         nowCharacter--;
       }
     }
@@ -170,7 +176,7 @@ function check_Word() {
   else { // Ignore Shift
     return;
   }
-  console.log(typingErrorCnt);
+  console.log(checkId);
 
   if(nowCharacter === sentences[nowString].length) { // 한 문장 타이핑이 끝나면 자동으로 다음 문장.
     nextContent();
