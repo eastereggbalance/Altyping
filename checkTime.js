@@ -4,7 +4,7 @@
 */
 var minutes = 0, seconds = 0, ms = 0;
 var running;
-var timer = document.getElementById('stopwatch');
+// var timer = document.getElementById('stopwatch');
 var wpm = document.getElementById('wpm');
 var accuracy = document.getElementById('Accuracy');
 var charactersPM, wordsPM; // PM => per minute
@@ -20,7 +20,7 @@ function startTimer()
 
 function run()
 {
-    timer.textContent = getTime();
+    // timer.textContent = getTime();
     ms++;
 
     if(ms == 100)
@@ -67,7 +67,7 @@ function stop()
     minutes = 0;
     seconds = 0;
     ms = 0;
-    timer.textContent = getTime();
+    // timer.textContent = getTime();
 }
 
 function stopTimer()
