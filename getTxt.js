@@ -113,7 +113,7 @@ function changed_Color(color, backColor, num) {
     temp.style.color = color;
   }
 
-  switch(color) { // Several cnt variable counting
+  switch(color) { // Several count variable counting
     case '#0e630e' : // correct
       checkTypingError[nowCharacter] = true;
       nowCharacter++;
@@ -128,12 +128,12 @@ function changed_Color(color, backColor, num) {
       typingErrorCnt++;
   }
 
-  if(checkId > num) {
-    return;
-  }
-  else {
-    checkId = num;
-  }
+  // if(checkId > num) {
+  //   return;
+  // }
+  // else {
+  //   checkId = num;
+  // }
 }
 
 function check_Input() {
@@ -147,7 +147,7 @@ function check_Input() {
   }
 
   switch(checkKey) {
-    case 1 :
+    case 1 : // characters
       if(tpField.value[nowCharacter] === outputTxt.textContent[nowCharacter]) { // Correct
         changed_Color('#0e630e', "#e7fbd3", nowCharacter);
       }
@@ -165,10 +165,11 @@ function check_Input() {
       else { // Wrong
         changed_Color('darkred', 'pink', nowCharacter);
       }
-    case 16 : // Ignore Shiftkey
       break;
     case 13 : // press enterkey
-      nextContent();
+      // nextContent();
+      break;
+    case 16 : // Ignore shiftkey
       break;
   }
 
@@ -178,17 +179,6 @@ function check_Input() {
   console.log(event.keyCode);
 }
 tpField.addEventListener('keyup', check_Input);
-
-//event 키코드가 a~z아니면 2
-// if(event.keyCode < 65) {
-//   checkKey = 2;
-// }
-// else if (event.keyCode === 13) {
-//   checkKey = 13;
-// }
-// else {
-//   checkKey = 1;
-// }
 
 ////////////////////////////////////////////////////////////////////
 //       keycode
