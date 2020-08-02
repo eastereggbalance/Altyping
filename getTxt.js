@@ -178,7 +178,8 @@ function check_Input() {
   }
   console.log(event.keyCode);
 }
-tpField.addEventListener('keyup', check_Input);
+tpField.addEventListener('keyup', check_Input); 
+// 꼭 HTML의 input 으로 안 받아도 addEventListener 사용 할 수 있지만 지금 당장으로서는 글자 비교가 힘듬
 
 ////////////////////////////////////////////////////////////////////
 //       keycode
