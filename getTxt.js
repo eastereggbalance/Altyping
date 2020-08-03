@@ -6,7 +6,8 @@ let outputTxt = document.getElementById('outputText');
 let tpField = document.getElementById('tpField');
 let sentences = [], btnReset;
 let nowString = 0, nowCharacter = 0;
-let wordsTotal = 1, typingCnt = 0, wordsCnt = 1, typingErrorCnt = 0, checkId = 0;
+let wordsTotal = 1, typingCnt = 0, wordsCnt = 1, typingErrorCnt = 0;
+let avgWpm, avgAccuracy, sumWpm, sumAccuracy;
 let checkTypingError = []; // 한번 지나간 아이디는 Count 하지 않음
 
 for (let i = 0; i < contents_Cnt; i++) {
@@ -26,10 +27,11 @@ function createReset() {
 }
 
 function nextContent() {
+  avgWpm = sumWpm / nowString + 1;
+  avgAccuracy = sumAccuracy / nowString + 1;
   nowCharacter = 0;
   typingCnt = 0;
   typingErrorCnt = 0
-  checkId = 0
   wordsTotal = 1;
   wordsCnt = 1;
   nowString++;
@@ -127,13 +129,6 @@ function changed_Color(color, backColor, num) {
       typingCnt++;
       typingErrorCnt++;
   }
-
-  // if(checkId > num) {
-  //   return;
-  // }
-  // else {
-  //   checkId = num;
-  // }
 }
 
 function check_Input() {
@@ -147,7 +142,7 @@ function check_Input() {
   }
 
   switch(checkKey) {
-    case 1 : // characters
+    case 1 : // input value characters
       if(tpField.value[nowCharacter] === outputTxt.textContent[nowCharacter]) { // Correct
         changed_Color('#0e630e', "#e7fbd3", nowCharacter);
       }
@@ -167,44 +162,24 @@ function check_Input() {
       }
       break;
     case 13 : // press enterkey
-      // nextContent();
       break;
     case 16 : // Ignore shiftkey
       break;
   }
 
-  if(nowCharacter === sentences[nowString].length) { // 한 문장 타이핑이 끝나면 자동으로 다음 문장. // 버그 있음
+  if(nowCharacter === sentences[nowString].length) { // 버그 있음
+    sumWpm += wordsPM;
+    sumAccuracy += accuracyRate;
     nextContent();
+    console.log(avgWpm, avgAccuracy);
   }
-  console.log(event.keyCode);
+  // console.log(event.keyCode);
 }
-tpField.addEventListener('keyup', check_Input); 
+tpField.addEventListener('keyup', check_Input);
+
 // 꼭 HTML의 input 으로 안 받아도 addEventListener 사용 할 수 있지만 지금 당장으로서는 글자 비교가 힘듬
 
-////////////////////////////////////////////////////////////////////
-//       keycode
-// event.keyCode ESC = 27
-// event.keyCode ctrl = 17
-// event.keyCode alt = 18
-// event.keyCode arrow up = 38
-// event.keyCode arrow down = 39
-// event.keyCode Tab = 9
 
-/*
-///////////큰 퀘스트///////////
- ** outputText가 화면에 나오면 그 길이에 맞추어 input width 변경 => tpField 크기를 그냥 늘림
-//////////디테일 퀘스트 //////////
- ** clear 버튼과 input 합치기
- ** Get description 버튼 누르면 #typingArea 활성화
- ** 특수문자 제거
-////////// 버  그  //////////
- **한글 타이핑시 시간 안감
------------------------------------------------------
-/////////// 해결한거 ///////////
- ** 글을 가져와 글자 하나 하나에 전부 span tag 추가
- ** 타이핑을 시작하면 시간 측정 시작
- ** resettyping 누르면 css 원래대로 돌리기 => 중복 제거
- ** Start new typing 버튼 계속나오는 버그 =>
- ** Start new typing 버튼 css 적용
- ** clear 또는 Next 버튼 눌렀을때 tpField 비워주기.
-*/
+// real accuracy
+// wpm accuracy 평균
+// *check_Input keypress *
