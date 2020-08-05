@@ -2,13 +2,14 @@
 ////////////////////////////아이디어//////////////////////////
 ** 다음 버튼 말고도 검색한 내용의 역사 개요 등 큰 카테고리를 url로 생성해서 누르면 해당 내용 가져오기.
 */
-var minutes = 0, seconds = 0, ms = 0;
-var running;
-// var timer = document.getElementById('stopwatch');
-var wpm = document.getElementById('wpm');
-var accuracy = document.getElementById('Accuracy');
-var charactersPM, wordsPM; // PM => per minute
-var accuracyRate, seconds_Minutes;
+let minutes = 0, seconds = 0, ms = 0;
+let running;
+// let timer = document.getElementById('stopwatch');
+let wpm = document.getElementById('wpm');
+let accuracy = document.getElementById('Accuracy');
+let accuracyRate, seconds_Minutes;
+let charactersPM, wordsPM; // PM => per minute
+
 
 function startTimer()
 {
