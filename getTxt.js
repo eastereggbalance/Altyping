@@ -7,7 +7,7 @@ let tpField = document.getElementById('tpField');
 let sentences = [], btnReset;
 let nowString = 0, nowCharacter = 0;
 let wordsTotal = 1, typingCnt = 0, wordsCnt = 1, typingErrorCnt = 0;
-let avgWpm, avgAccuracy, sumWpm, sumAccuracy;
+let avgWpm = 0, avgAccuracy = 0, sumWpm = 0, sumAccuracy = 0;
 let checkTypingError = []; // 한번 지나간 아이디는 Count 하지 않음
 
 for (let i = 0; i < contents_Cnt; i++) {
@@ -27,8 +27,6 @@ function createReset() {
 }
 
 function nextContent() {
-  avgWpm = sumWpm / nowString + 1;
-  avgAccuracy = sumAccuracy / nowString + 1;
   nowCharacter = 0;
   typingCnt = 0;
   typingErrorCnt = 0
@@ -92,6 +90,16 @@ function startTyping() {
   }
 }
 btnStart.addEventListener('click', startTyping);
+
+function calcurateAvg(sum) {
+  let avg = 0;
+
+  avg = sum / (nowString + 1);
+  avg = avg.toFixed(0);
+  avg *= 1;
+
+  return avg;
+}
 
 function backSpaceCorrection(num) {
   if(checkTypingError[num] === true) {
@@ -169,7 +177,11 @@ function check_Input() {
 
   if(nowCharacter === sentences[nowString].length) { // 버그 있음
     sumWpm += wordsPM;
+    avgWpm = calcurateAvg(sumWpm);
+
     sumAccuracy += accuracyRate;
+    avgAccuracy = calcurateAvg(sumAccuracy);
+
     nextContent();
     console.log(avgWpm, avgAccuracy);
   }
