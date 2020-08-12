@@ -26,14 +26,18 @@ function createReset() {
   document.getElementById('typingArea').appendChild(btnReset);
 }
 
-function nextContent() {
+function cntInitialization() { // 다음 컨텐츠를 가져오면 전부 초기화
   nowCharacter = 0;
   typingCnt = 0;
   typingErrorCnt = 0
   wordsTotal = 1;
   wordsCnt = 1;
-  nowString++;
   tpField.value = '';
+}
+
+function nextContent() {
+  cntInitialization();
+  nowString++;
   stop();
   startTyping();
 }
@@ -91,7 +95,7 @@ function startTyping() {
 }
 btnStart.addEventListener('click', startTyping);
 
-function calcurateAvg(sum) {
+function calculateAvg(sum) {
   let avg = 0;
 
   avg = sum / (nowString + 1);
@@ -177,10 +181,10 @@ function check_Input() {
 
   if(nowCharacter === sentences[nowString].length) { // 버그 있음
     sumWpm += wordsPM;
-    avgWpm = calcurateAvg(sumWpm);
+    avgWpm = calculateAvg(sumWpm);
 
     sumAccuracy += accuracyRate;
-    avgAccuracy = calcurateAvg(sumAccuracy);
+    avgAccuracy = calculateAvg(sumAccuracy);
 
     nextContent();
     console.log(avgWpm, avgAccuracy);
