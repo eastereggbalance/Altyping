@@ -11,21 +11,17 @@ let accuracyRate, seconds_Minutes;
 let charactersPM, wordsPM; // PM => per minute
 
 
-function startTimer()
-{
-    if(!running) // 이 조건을 달아 주지 않으면 시간이 계속 빨라짐
-    {
+function startTimer() {
+    if(!running) { // 이 조건을 달아 주지 않으면 시간이 계속 빨라짐
         running = setInterval(run, 10);
     }
 }
 
-function run()
-{
+function run() {
     // timer.textContent = getTime();
     ms++;
 
-    if(ms == 100)
-    {
+    if(ms == 100) {
         ms = 0;
         seconds++;
 
@@ -50,20 +46,17 @@ function run()
         accuracyRate *= 1;
         accuracy.textContent = `Accuracy : ${accuracyRate} %`;
     }
-    if(seconds == 60)
-    {
+    if(seconds == 60) {
         seconds = 0;
         minutes++;
     }
 }
 
-function pause()
-{
+function pause() {
     stopTimer();
 }
 
-function stop()
-{
+function stop() {
     stopTimer();
     minutes = 0;
     seconds = 0;
@@ -71,14 +64,12 @@ function stop()
     // timer.textContent = getTime();
 }
 
-function stopTimer()
-{
+function stopTimer() {
     clearInterval(running);
     running = false;
 }
 
-function getTime()
-{
+function getTime() {
     return (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds) + ":" + (ms < 10 ? "0" + ms : ms)
 }
 

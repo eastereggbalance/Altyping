@@ -189,7 +189,7 @@ function check_Input() {
     nextContent();
     console.log(avgWpm, avgAccuracy);
   }
-  // console.log(event.keyCode);
+  console.log(event.keyCode);
 }
 tpField.addEventListener('keyup', check_Input);
 
