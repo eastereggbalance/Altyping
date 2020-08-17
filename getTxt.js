@@ -156,7 +156,7 @@ function check_Input() {
   switch(checkKey) {
     case 1 : // input value characters
       if(tpField.value[nowCharacter] === outputTxt.textContent[nowCharacter]) { // Correct
-        changed_Color('#0e630e', "#e7fbd3", nowCharacter);
+        changed_Color('#0e630e', '#e7fbd3', nowCharacter);
       }
       else if(event.keyCode === 8) { // Backspace
         if(nowCharacter === 0) { // 아무것도 입력하지 않은 상태에서 Backspace를 눌렀을때
@@ -164,7 +164,7 @@ function check_Input() {
           alert("Nothing");
         }
         else { // Just Backspace
-          changed_Color('gray', "white", nowCharacter - 1);
+          changed_Color('gray', 'white', nowCharacter - 1);
           backSpaceCorrection(nowCharacter - 1);
           nowCharacter--;
         }
