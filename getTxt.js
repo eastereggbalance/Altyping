@@ -145,17 +145,16 @@ function changed_Color(color, backColor, num) {
 
 function check_Input() {
   let checkKey = 1;
-  
-  if(event.keyCode === 16) {
-    checkKey = 16;
-  }
-  else if(event.keyCode === 13) {
-    checkKey = 13;
+  let keyValue = event.keyCode;
+  keyValue = String.fromCharCode(keyValue);
+
+  if(event.keyCode === 16 || event.keyCode === 13) { //Ignore enter and shift
+    checkKey = 0;
   }
 
   switch(checkKey) {
     case 1 : // input value characters
-      if(tpField.value[nowCharacter] === outputTxt.textContent[nowCharacter]) { // Correct
+      if(keyValue == outputTxt.textContent[nowCharacter]) { // Correct
         changed_Color('#0e630e', '#e7fbd3', nowCharacter);
       }
       else if(event.keyCode === 8) { // Backspace
@@ -173,9 +172,7 @@ function check_Input() {
         changed_Color('darkred', 'pink', nowCharacter);
       }
       break;
-    case 13 : // press enterkey
-      break;
-    case 16 : // Ignore shiftkey
+    case 0 :
       break;
   }
 
@@ -189,9 +186,15 @@ function check_Input() {
     nextContent();
     console.log(avgWpm, avgAccuracy);
   }
-  console.log(event.keyCode);
+  console.log(keyValue);
 }
-tpField.addEventListener('keyup', check_Input);
+document.addEventListener('keyup', check_Input);
+
+// let test = 0;
+// document.addEventListener('keyup', function () {
+//   console.log(test);
+//   test++;
+// })
 
 // 꼭 HTML의 input 으로 안 받아도 addEventListener 사용 할 수 있지만 지금 당장으로서는 글자 비교가 힘듬
 
