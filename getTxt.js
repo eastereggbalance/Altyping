@@ -95,10 +95,10 @@ function startTyping() {
 }
 btnStart.addEventListener('click', startTyping);
 
-function calculateAvg(sum) {
+function calculateAvg(sum, total) {
   let avg = 0;
 
-  avg = sum / (nowString + 1);
+  avg = sum / (total);
   avg = avg.toFixed(0);
   avg *= 1;
 
@@ -181,10 +181,10 @@ function check_Input() {
 
   if(nowCharacter === sentences[nowString].length) { // 버그 있음
     sumWpm += wordsPM;
-    avgWpm = calculateAvg(sumWpm);
+    avgWpm = calculateAvg(sumWpm, nowString + 1);
 
     sumAccuracy += accuracyRate;
-    avgAccuracy = calculateAvg(sumAccuracy);
+    avgAccuracy = calculateAvg(sumAccuracy, nowString + 1);
 
     nextContent();
     console.log(avgWpm, avgAccuracy);
