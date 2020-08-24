@@ -146,11 +146,8 @@ function changed_Color(color, backColor, num) {
 function check_Input() {
   let checkKey = 1;
   
-  if(event.keyCode === 16) {
-    checkKey = 16;
-  }
-  else if(event.keyCode === 13) {
-    checkKey = 13;
+  if(event.keyCode === 16 || event.keyCode === 13) { //Ignore enter and shift
+    checkKey = 0;
   }
 
   switch(checkKey) {
@@ -173,13 +170,11 @@ function check_Input() {
         changed_Color('darkred', 'pink', nowCharacter);
       }
       break;
-    case 13 : // press enterkey
-      break;
-    case 16 : // Ignore shiftkey
+    case 0 :
       break;
   }
 
-  if(nowCharacter === sentences[nowString].length) { // 버그 있음
+  if(nowCharacter === sentences[nowString].length) { // 타이핑이 끝나면 다음 컨텐츠
     sumWpm += wordsPM;
     avgWpm = calculateAvg(sumWpm, nowString + 1);
 
